@@ -2,6 +2,7 @@
 
 A new Flutter project.
 
+![weather](weather.gif)
 ## Getting Started
 
 This project is a starting point for a Flutter application.
