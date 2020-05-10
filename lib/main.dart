@@ -81,76 +81,82 @@ class _SearchPageState extends State<SearchPage> {
     return BlocBuilder<WeatherBloc, WeatherState>(builder: (context, state) {
       // Not Loading State
       if (state is NotloadingWeather) {
-        return Column(mainAxisAlignment: MainAxisAlignment.center, children: <
-            Widget>[
-          Image.asset(
-            'images/pngbarn.png',
-            height: 150.0,
-            width: 150.0,
-          ),
-          Text(
-            'Weather..',
-            style: TextStyle(
-                color: Colors.black,
-                fontSize: 40.0,
-                fontWeight: FontWeight.bold),
-          ),
-          SizedBox(
-            height: 30,
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: TextField(
-              style: TextStyle(color: Colors.white, fontSize: 20.0),
-              autofocus: false,
-              onChanged: (value) {},
-              controller: editingController,
-              decoration: InputDecoration(
-                  errorText: validate ? 'Please Enter Location' : null,
-                  filled: true,
-                  fillColor: Color(color1),
-                  labelText: "Enter location",
-                  labelStyle: TextStyle(color: Colors.white, fontSize: 20.0),
-                  prefixIcon: Icon(
-                    Icons.search,
-                    color: Colors.white,
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.white, width: 2.0),
-                      borderRadius: BorderRadius.all(Radius.circular(30.0))),
-                  border: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.white, width: 3.0),
-                      borderRadius: BorderRadius.all(Radius.circular(30.0)))),
-            ),
-          ),
-          SizedBox(height: 15.0),
-          Container(
-            width: 250.0,
-            height: 50.0,
-            child: FlatButton(
-              color: Color(color1),
-              shape: new RoundedRectangleBorder(
-                  side: BorderSide(color: Colors.white, width: 2.0),
-                  borderRadius: BorderRadius.all(Radius.circular(25))),
-              onPressed: () {
-                setState(() {
-                  if (editingController.text.isEmpty) {
-                    validate = true;
-                  } else {
-                    weatherbloc.add(FetchWeather(editingController.text));
-                    validate = false;
-                  }
-                  cityname = editingController.text;
-                });
-                editingController.clear();
-              },
-              child: Text(
-                'Search Location',
-                style: TextStyle(fontSize: 20.0, color: Colors.white),
+        return Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Image.asset(
+                'images/pngbarn.png',
+                height: 145.0,
+                width: 145.0,
               ),
-            ),
-          )
-        ]);
+              Text(
+                'Weather..',
+                style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 40.0,
+                    fontWeight: FontWeight.bold),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 8,right: 8),
+                child: TextField(scrollPadding: EdgeInsets.all(10),
+                  style: TextStyle(color: Colors.white, fontSize: 20.0),
+                  autofocus: true,
+                  onChanged: (value) {},
+                  controller: editingController,
+                  decoration: InputDecoration(
+                      errorText: validate ? 'Please Enter Location' : null,
+                      filled: true,
+                      fillColor: Color(color1),
+                      labelText: "Enter location",
+                      labelStyle:
+                          TextStyle(color: Colors.white, fontSize: 20.0),
+                      prefixIcon: Icon(
+                        Icons.search,
+                        color: Colors.white,
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                          borderSide:
+                              BorderSide(color: Colors.white, width: 2.0),
+                          borderRadius:
+                              BorderRadius.all(Radius.circular(30.0))),
+                      border: OutlineInputBorder(
+                          borderSide:
+                              BorderSide(color: Colors.white, width: 3.0),
+                          borderRadius:
+                              BorderRadius.all(Radius.circular(30.0)))),
+                ),
+              ),
+              SizedBox(height: 10.0),
+              Container(
+                width: 250.0,
+                height: 40.0,
+                child: FlatButton(
+                  color: Color(color1),
+                  shape: new RoundedRectangleBorder(
+                      side: BorderSide(color: Colors.white, width: 2.0),
+                      borderRadius: BorderRadius.all(Radius.circular(25))),
+                  onPressed: () {
+                    setState(() {
+                      if (editingController.text.isEmpty) {
+                        validate = true;
+                      } else {
+                        weatherbloc.add(FetchWeather(editingController.text));
+                        validate = false;
+                      }
+                      cityname = editingController.text;
+                    });
+                    editingController.clear();
+                  },
+                  child: Text(
+                    'Search Location',
+                    style: TextStyle(fontSize: 20.0, color: Colors.white),
+                  ),
+                ),
+              )
+            ]);
       }
       //Loading State
       else if (state is LoadingWeather) {
@@ -309,8 +315,9 @@ class _SearchPageState extends State<SearchPage> {
 
         // data is null mean no record found
         else {
-          return WillPopScope(onWillPop: movetolastState,
-                      child: Container(
+          return WillPopScope(
+            onWillPop: movetolastState,
+            child: Container(
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height,
               decoration: BoxDecoration(
@@ -329,7 +336,8 @@ class _SearchPageState extends State<SearchPage> {
                       child: FlatButton(
                         shape: new RoundedRectangleBorder(
                             side: BorderSide(color: Colors.white, width: 2.0),
-                            borderRadius: BorderRadius.all(Radius.circular(25))),
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(25))),
                         onPressed: () {
                           BlocProvider.of<WeatherBloc>(context)
                               .add(ResetWeather());
